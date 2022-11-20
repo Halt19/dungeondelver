@@ -63,13 +63,6 @@ public class EnemyScript : MonoBehaviour
     public void HasGun(bool inc)
     {
         hasGun = inc;
-        if (inc)
-        {
-            agent.stoppingDistance = gunStoppingDistance;
-        } else
-        {
-            agent.stoppingDistance = 0f;
-        }
     }
 
     /*
@@ -96,7 +89,10 @@ public class EnemyScript : MonoBehaviour
         if (isAlerted || wasDamaged || Vector3.Distance(playerOBJ.transform.position, this.gameObject.transform.position) < aggroRange)
         {
             agent.SetDestination(playerOBJ.transform.position);
-            transform.LookAt(playerTargetLocation.transform);
+            if (playerTargetLocation != null)
+            {
+                transform.LookAt(playerTargetLocation.transform);
+            }
             if (!wasDamaged && agent.remainingDistance > aggroRange)
             {
                 agent.SetDestination(this.gameObject.transform.position);
